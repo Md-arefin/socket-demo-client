@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useSocket } from '../../Provider/SocketProvide';
+import './room.css';
 
 const Room = () => {
 
@@ -29,22 +30,26 @@ const Room = () => {
     }, [])
     return (
         <div>
-            <h1>This is my room</h1>
-            <h4>{
+            <h1 className='center'>This is my room</h1>
+            <h4 className='center'>{
                 remoteSocketId ? `${remoteSocketEmail} joined` : 'No one in the room'
             }</h4>
+            <div className='center' >
             {
                 remoteSocketId && <button onClick={handleCallUser}>Call</button>
             }
-            {
-                myStream && <ReactPlayer
-                    url={myStream}
-                    playing
-                    muted
-                    height='300px'
-                    width={400}
-                />
-            }
+            </div>
+            <div className='center-1'>
+                {
+                    myStream && <ReactPlayer 
+                        url={myStream}
+                        playing
+                        // muted
+                        height={700}
+                        width={700}
+                    />
+                }
+            </div>
         </div>
     );
 };

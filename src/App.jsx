@@ -1,11 +1,13 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './App.css'
+import { useSocket } from './Provider/SocketProvide';
 
 
 function App() {
 
-  // const [email, setEmail] = useState('');
-  // const [room, setRoom] = useState('');
+  const socket = useSocket();
+  const navigate = useNavigate();
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
@@ -15,7 +17,24 @@ function App() {
     const room = form.room.value;
 
     console.log(email, room)
+
+    socket.emit('room:join', { email, room });
+
   }, [])
+
+  const handleJoinRoom = useCallback( (data) => {
+    const {email , room } = data;
+    navigate(`/room/${room}`);
+  }, [navigate])
+
+  useEffect(() => {
+    socket.on('room:join', handleJoinRoom);
+
+    return () =>{
+      socket.off('room:join', handleJoinRoom)
+    }
+  }, [])
+  
 
   return (
     <>

@@ -7,11 +7,16 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import SocketProvide from './Provider/SocketProvide.jsx';
+import Room from './Pages/Room/Room.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/room/:id",
+    element: <Room/>,
   },
 ]);
 
